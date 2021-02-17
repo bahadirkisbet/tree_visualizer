@@ -40671,8 +40671,8 @@ exports.middleware = index;
 
 
 },{"mini-signals":40,"parse-uri":42}],46:[function(require,module,exports){
-const PIXI = require('pixi.js');
-const Viewport = require('pixi-viewport').Viewport;
+const PIXI = require('pixi.js'); // the graphic engine
+const Viewport = require('pixi-viewport').Viewport; // the dynamic background
 const app = new PIXI.Application({
     height : window.innerHeight - 53,
     width : window.innerWidth,
@@ -40695,62 +40695,31 @@ const viewport = new Viewport({
     interaction: app.renderer.plugins.interaction // the interaction module is important for wheel to work properly when renderer.view is placed or scaled
 });
 // add the viewport to the stage
-app.stage.addChild(viewport)
+app.stage.addChild(viewport);
 
 // activate plugins
 viewport
     .drag()
     .pinch()
     .wheel()
-    .decelerate()
+    .decelerate();
 
-// add a red box
-const sprite = viewport.addChild(new PIXI.Sprite(PIXI.Texture.WHITE))
-sprite.tint = 0xff0000
-sprite.width = sprite.height = 100
-sprite.position.set(100, 100)
 
-/*
-var canvas = document.getElementById('canvas'); 
-var renderer = PIXI.autoDetectRenderer(100,200,canvas);
-document.body.appendChild(renderer.view);
-renderer.view.height = window.innerHeight - 53;
-renderer.view.width = window.innerWidth;
+let circle = new PIXI.Graphics();
+circle.lineStyle(2, 0xff0000);
+circle.beginFill(0xff0000);
+//circle.z = -1;
+circle.position.set(window.innerWidth / 2, 100)
+circle.drawCircle(0,0,50);
+circle.endFill();
+viewport.addChild(circle);
 
-renderer.view.style.position = 'absolute'; 
-renderer.view.style.left = '50%'; 
-renderer.view.style.top = '52.7%'; 
-renderer.view.style.transform = 'translate3d( -50%, -50%, 0 )';
-
-const viewport = new Viewport({
-    screenWidth: window.innerWidth,
-    screenHeight: window.innerHeight,
-    worldWidth: 1000,
-    worldHeight: 1000,
-
-    interaction: renderer.plugins.interaction // the interaction module is important for wheel to work properly when renderer.view is placed or scaled
-});
-
-*/
-
-/*
-
-// add the viewport to the stage
-app.stage.addChild(viewport)
-
-// activate plugins
-viewport
-    .drag()
-    .pinch()
-    .wheel()
-    .decelerate()
-
-// add a red box
-const sprite = viewport.addChild(new PIXI.Sprite(PIXI.Texture.WHITE))
-sprite.tint = 0xff0000
-sprite.width = sprite.height = 100
-sprite.position.set(100, 100)
-*/
+let text = new PIXI.Text("1");
+text.anchor.set(0.5);
+//text.x = window.innerWidth / 2 ;
+//text.y = 100 ;
+//viewport.addChild(text);
+circle.addChild(text);
 },{"pixi-viewport":43,"pixi.js":44}],47:[function(require,module,exports){
 // shim for using process in browser
 var process = module.exports = {};
