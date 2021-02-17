@@ -1,55 +1,80 @@
-function drawLine(ctx, begin, end, stroke = 'black', width = 1) {
-    if (stroke) {
-        ctx.strokeStyle = stroke;
-    }
+const PIXI = require('pixi.js');
+const Viewport = require('pixi-viewport').Viewport;
+const app = new PIXI.Application({
+    height : window.innerHeight - 53,
+    width : window.innerWidth,
+    antialias : true,
+    transparent : true,
+    resolution : 1
+});
+document.body.appendChild(app.view)
+app.view.style.position = 'absolute';
+app.view.style.left = '50%';
+app.view.style.top = '52.7%';
+app.view.style.transform = 'translate3d( -50%, -50%, 0 )';
 
-    if (width) {
-        ctx.lineWidth = width;
-    }
+const viewport = new Viewport({
+    screenWidth: window.innerWidth,
+    screenHeight: window.innerHeight,
+    worldWidth: 10000,
+    worldHeight: 10000,
 
-    ctx.beginPath();
-    ctx.moveTo(...begin);
-    ctx.lineTo(...end);
-    ctx.stroke();
-}
+    interaction: app.renderer.plugins.interaction // the interaction module is important for wheel to work properly when renderer.view is placed or scaled
+});
+// add the viewport to the stage
+app.stage.addChild(viewport)
 
-function draw_rectangle(ctx, first_corner, second_corner, stroke = "black" ,width =1)
-{
-    var first_point = first_corner;
-    var second_point = [first_corner[0],second_corner[1]];
-    var third_point = second_corner;
-    var fourth_point = [second_corner[0],first_corner[1]];
-    drawLine(ctx,first_point,second_point,stroke,width);
-    drawLine(ctx,fourth_point,third_point,stroke,width);
-    drawLine(ctx,first_point,fourth_point,stroke,width);
-    drawLine(ctx,second_point,third_point,stroke,width);
-    
-}
-function draw_circle(ctx, x, y, r, stroke = '#FF0000', width=3)
-{
-    if (stroke) {
-        ctx.strokeStyle = stroke;
-    }
+// activate plugins
+viewport
+    .drag()
+    .pinch()
+    .wheel()
+    .decelerate()
 
-    if (width) {
-        ctx.lineWidth = width;
-    }
-    ctx.beginPath();
-    ctx.arc(x,y,r,2*Math.PI,false);
-    ctx.stroke();
-}
+// add a red box
+const sprite = viewport.addChild(new PIXI.Sprite(PIXI.Texture.WHITE))
+sprite.tint = 0xff0000
+sprite.width = sprite.height = 100
+sprite.position.set(100, 100)
 
+/*
+var canvas = document.getElementById('canvas'); 
+var renderer = PIXI.autoDetectRenderer(100,200,canvas);
+document.body.appendChild(renderer.view);
+renderer.view.height = window.innerHeight - 53;
+renderer.view.width = window.innerWidth;
 
-function draw() {
-    const canvas = document.querySelector('#canvas');
-    if (canvas.getContext) {
-        const ctx = canvas.getContext('2d');
-        draw_rectangle(ctx,[0,0],[1200,900]);
-        draw_circle(ctx,600,50,30);
-        draw_rectangle(ctx, [570, 85], [580, 115], "red", 2);
-        draw_rectangle(ctx, [580, 85], [620, 115],"red",2);
-        draw_rectangle(ctx, [620, 85], [630, 115], "red", 2);
-    }
-}
+renderer.view.style.position = 'absolute'; 
+renderer.view.style.left = '50%'; 
+renderer.view.style.top = '52.7%'; 
+renderer.view.style.transform = 'translate3d( -50%, -50%, 0 )';
 
-draw();
+const viewport = new Viewport({
+    screenWidth: window.innerWidth,
+    screenHeight: window.innerHeight,
+    worldWidth: 1000,
+    worldHeight: 1000,
+
+    interaction: renderer.plugins.interaction // the interaction module is important for wheel to work properly when renderer.view is placed or scaled
+});
+
+*/
+
+/*
+
+// add the viewport to the stage
+app.stage.addChild(viewport)
+
+// activate plugins
+viewport
+    .drag()
+    .pinch()
+    .wheel()
+    .decelerate()
+
+// add a red box
+const sprite = viewport.addChild(new PIXI.Sprite(PIXI.Texture.WHITE))
+sprite.tint = 0xff0000
+sprite.width = sprite.height = 100
+sprite.position.set(100, 100)
+*/
