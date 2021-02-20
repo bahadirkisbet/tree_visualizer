@@ -40683,7 +40683,7 @@ const app = new PIXI.Application({
 document.body.appendChild(app.view)
 app.view.style.position = 'absolute';
 app.view.style.left = '50%';
-app.view.style.top = '52.7%';
+app.view.style.top = '52.0%';
 app.view.style.transform = 'translate3d( -50%, -50%, 0 )';
 
 const viewport = new Viewport({
@@ -40705,6 +40705,7 @@ viewport
     .decelerate();
 
 
+/*
 let circle = new PIXI.Graphics();
 circle.lineStyle(2, 0xff0000);
 circle.beginFill(0xff0000);
@@ -40720,6 +40721,37 @@ text.anchor.set(0.5);
 //text.y = 100 ;
 //viewport.addChild(text);
 circle.addChild(text);
+*/
+
+
+function draw_panel(x, y, width, height, color = 0xd2ecfe)
+{
+    let panel = new PIXI.Graphics();
+    panel.lineStyle(10,color);
+    panel.beginFill(color);
+    panel.position.set(x, y);
+    panel.drawRect(0, 0, width, height);
+    panel.endFill();
+    app.stage.addChild(panel);
+    return panel;
+}
+
+draw_circle([window.innerWidth / 2, 300], 0xff0000,text="1");
+function draw_circle(position, color = 0xff0000,text)
+{
+    let circle = new PIXI.Graphics();
+    circle.lineStyle(2,color);
+    circle.beginFill(color);
+    circle.position.set(...position);
+    circle.drawCircle(0,0,30);
+    circle.endFill();
+    viewport.addChild(circle);
+    let style = new PIXI.TextStyle({ fill: ["0xffffff"]})
+    let txt = new PIXI.Text(text,style);
+    txt.anchor.set(0.5);
+    circle.addChild(txt);
+}
+
 },{"pixi-viewport":43,"pixi.js":44}],47:[function(require,module,exports){
 // shim for using process in browser
 var process = module.exports = {};
