@@ -40752,6 +40752,10 @@ function draw_circle(position, color = 0xff0000,text)
     circle.addChild(txt);
 }
 
+function add_a_child() {
+    var data = document.getElementById("add_function").value;
+    console.log(data);
+}
 },{"pixi-viewport":43,"pixi.js":44}],47:[function(require,module,exports){
 // shim for using process in browser
 var process = module.exports = {};
