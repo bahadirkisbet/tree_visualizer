@@ -6,6 +6,7 @@ class BinarySearchTreeNode{
         this.left = cleft;
         this.right = cright;
     }
+    
     function getData() {
         return this.data;
     }

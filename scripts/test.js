@@ -1,3 +1,4 @@
+
 function drawLine(ctx, begin, end, stroke = 'black', width = 1) {
     if (stroke) {
         ctx.strokeStyle = stroke;
@@ -24,20 +25,19 @@ function draw_rectangle(ctx, first_corner, second_corner, stroke = "black", widt
     drawLine(ctx, second_point, third_point, stroke, width);
 
 }
-function draw_circle(ctx, x, y, r, stroke = '#FF0000', width = 3) {
-    if (stroke) {
-        ctx.strokeStyle = stroke;
-    }
-
-    if (width) {
-        ctx.lineWidth = width;
-    }
-    ctx.beginPath();
-    ctx.arc(x, y, r, 2 * Math.PI, false);
-    ctx.stroke();
+function draw_circle(position, color = 0xff0000, text) {
+    let circle = new PIXI.Graphics();
+    circle.lineStyle(2, color);
+    circle.beginFill(color);
+    circle.position.set(...position);
+    circle.drawCircle(0, 0, 30);
+    circle.endFill();
+    viewport.addChild(circle);
+    let style = new PIXI.TextStyle({ fill: ["0xffffff"] })
+    let txt = new PIXI.Text(text, style);
+    txt.anchor.set(0.5);
+    circle.addChild(txt);
 }
-
-
 function draw() {
     const canvas = document.querySelector('#canvas');
     if (canvas.getContext) {
@@ -49,5 +49,8 @@ function draw() {
         draw_rectangle(ctx, [620, 85], [630, 115], "red", 2);
     }
 }
-
+function mytest()
+{
+    console.log("hahaha");
+}
 //draw(); 

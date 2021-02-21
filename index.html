@@ -11,9 +11,6 @@
     <meta name = "author" content = "Bahadır Kisbet"/>
 
     <link rel="stylesheet" href="main_style.css">
-
-    <script type="module" src='node_modules/pixi-viewport'></script>
-    <script type="module" src='node_modules/pixi.js'></script>
     <!-- Blueprint dependencies -->
     <!-- Style dependencies -->
     <link href="https://unpkg.com/normalize.css@^7.0.0" rel="stylesheet" />
@@ -35,7 +32,7 @@
 </header>
 
 <body>
-    <script type='text/javascript' src='scripts/main.js'></script>
+   
 
     <nav class="bp3-navbar bp3-dark">
         <div style="margin: 2 auto; width: 480px;"> <!-- ADD ME -->
@@ -72,33 +69,7 @@
     
         </div>
     </div>
-    <script> // it checks whether the enter key is pressed or not.
-        document.getElementById('add_input').addEventListener('keypress', function (event) {
-            if (event.keyCode == 13) {
-                console.log(document.getElementById("add_input").value);
-                alert(document.getElementById("add_input").value)
-                document.getElementById("add_form").reset();
-                event.preventDefault();
-            }
-        });
-
-        document.getElementById('search_input').addEventListener('keypress', function (event) {
-                if (event.keyCode == 13) {
-                    console.log(document.getElementById("search_input").value);
-                    document.getElementById("search_form").reset();
-                    event.preventDefault();
-                }
-            });
-        document.getElementById('delete_input').addEventListener('keypress', function (event) {
-                if (event.keyCode == 13) {
-                    console.log(document.getElementById("delete_input").value);
-                    document.getElementById("delete_form").reset();
-                    event.preventDefault();
-                }
-            });
-        
-    </script>
-
+    <script type='text/javascript' src='bundle.js'></script>
 </body>
 
 </html>

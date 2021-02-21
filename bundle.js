@@ -40705,6 +40705,7 @@ viewport
     .decelerate();
 
 
+
 /*
 let circle = new PIXI.Graphics();
 circle.lineStyle(2, 0xff0000);
@@ -40723,20 +40724,7 @@ text.anchor.set(0.5);
 circle.addChild(text);
 */
 
-
-function draw_panel(x, y, width, height, color = 0xd2ecfe)
-{
-    let panel = new PIXI.Graphics();
-    panel.lineStyle(10,color);
-    panel.beginFill(color);
-    panel.position.set(x, y);
-    panel.drawRect(0, 0, width, height);
-    panel.endFill();
-    app.stage.addChild(panel);
-    return panel;
-}
-
-draw_circle([window.innerWidth / 2, 300], 0xff0000,text="1");
+var first = draw_circle([window.innerWidth / 2, 300], 0xff0000,text="1");
 function draw_circle(position, color = 0xff0000,text)
 {
     let circle = new PIXI.Graphics();
@@ -40750,12 +40738,50 @@ function draw_circle(position, color = 0xff0000,text)
     let txt = new PIXI.Text(text,style);
     txt.anchor.set(0.5);
     circle.addChild(txt);
+    return circle
+}
+var arr = []
+arr.push(first);
+function add_a_child() {
+    var data = document.getElementById("add_input").value;
+    var prev_node = arr[arr.length - 1];
+    var curr_node = draw_circle([prev_node.x, prev_node.y + 100], 0xff0000, text = data);
+    arr.push(curr_node);
+    draw_line(prev_node.x, prev_node.y, prev_node.x, prev_node.y+100);
+    if(data === "10") curr_node.destroy();
 }
 
-function add_a_child() {
-    var data = document.getElementById("add_function").value;
-    console.log(data);
+function draw_line(x1,y1,x2,y2){
+    let line = new PIXI.Graphics();
+    line.lineStyle(2,'black');
+    line.beginFill();
+    line.position.set(x1,y1+30);
+    line.lineTo(x2-x1,y2-y1-60);
+    viewport.addChild(line);
 }
+
+document.getElementById('add_input').addEventListener('keypress', function (event) {
+    if (event.keyCode == 13) {
+        add_a_child();
+        document.getElementById("add_form").reset();
+        event.preventDefault();
+    }
+});
+
+document.getElementById('search_input').addEventListener('keypress', function (event) {
+    if (event.keyCode == 13) {
+        console.log(document.getElementById("search_input").value);
+        document.getElementById("search_form").reset();
+        event.preventDefault();
+    }
+});
+document.getElementById('delete_input').addEventListener('keypress', function (event) {
+    if (event.keyCode == 13) {
+        console.log(document.getElementById("delete_input").value);
+        document.getElementById("delete_form").reset();
+        event.preventDefault();
+    }
+});
 },{"pixi-viewport":43,"pixi.js":44}],47:[function(require,module,exports){
 // shim for using process in browser
 var process = module.exports = {};
