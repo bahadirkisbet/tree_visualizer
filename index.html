@@ -11,29 +11,31 @@
     <meta name = "author" content = "Bahadır Kisbet"/>
 
     <link rel="stylesheet" href="main_style.css">
+
+    <script type="module" src='node_modules/pixi-viewport'></script>
+    <script type="module" src='node_modules/pixi.js'></script>
     <!-- Blueprint dependencies -->
     <!-- Style dependencies -->
     <link href="https://unpkg.com/normalize.css@^7.0.0" rel="stylesheet" />
     <!-- Blueprint stylesheets -->
     <link href="https://unpkg.com/@blueprintjs/icons@^3.4.0/lib/css/blueprint-icons.css" rel="stylesheet" />
     <link href="https://unpkg.com/@blueprintjs/core@^3.10.0/lib/css/blueprint.css" rel="stylesheet" />
- 
+    <script src='https://unpkg.com/classnames@^2.2'></script>
+    <script src='https://unpkg.com/dom4@^1.8'></script>
+    <script src='https://unpkg.com/tslib@^1.9.0'></script>
+    <script src='https://unpkg.com/react@^16.2.0/umd/react.production.min.js'></script>
+    <script src='https://unpkg.com/react-dom@^16.2.0/umd/react-dom.production.min.js'></script>
+    <script src='https://unpkg.com/react-transition-group@^2.2.1/dist/react-transition-group.min.js'></script>
+    <script src='https://unpkg.com/popper.js@^1.14.1/dist/umd/popper.js'></script>
+    <script src='https://unpkg.com/react-popper@^1.0.0/dist/index.umd.min.js'></script>
+    <script src='https://unpkg.com/resize-observer-polyfill@^1.5.0'></script>
+    <script src='https://unpkg.com/@blueprintjs/icons@^3.4.0'></script>
+    <script src='https://unpkg.com/@blueprintjs/core@^3.10.0'></script>
+    
 </header>
-<script>
-function msg() {console.log("HEHE");}
-</script>
+
 <body>
-        <script src='https://unpkg.com/classnames@^2.2'></script>
-        <script src='https://unpkg.com/dom4@^1.8'></script>
-        <script src='https://unpkg.com/tslib@^1.9.0'></script>
-        <script src='https://unpkg.com/react@^16.2.0/umd/react.production.min.js'></script>
-        <script src='https://unpkg.com/react-dom@^16.2.0/umd/react-dom.production.min.js'></script>
-        <script src='https://unpkg.com/react-transition-group@^2.2.1/dist/react-transition-group.min.js'></script>
-        <script src='https://unpkg.com/popper.js@^1.14.1/dist/umd/popper.js'></script>
-        <script src='https://unpkg.com/react-popper@^1.0.0/dist/index.umd.min.js'></script>
-        <script src='https://unpkg.com/resize-observer-polyfill@^1.5.0'></script>
-        <script src='https://unpkg.com/@blueprintjs/icons@^3.4.0'></script>
-        <script src='https://unpkg.com/@blueprintjs/core@^3.10.0'></script>
+    <script type='text/javascript' src='scripts/main.js'></script>
 
     <nav class="bp3-navbar bp3-dark">
         <div style="margin: 2 auto; width: 480px;"> <!-- ADD ME -->
@@ -53,43 +55,49 @@ function msg() {console.log("HEHE");}
 
     </nav>
 
+
     <div class="sidenav">
         <div class="make_center">
-            <input class="bp3-input .modifier" :modifier type="text" placeholder="Add a node" dir="auto" />
+            <form id="add_form">
+                <input id="add_input" class="bp3-input .modifier" :modifier type="text"  placeholder="Add a node" dir="auto" />
+            </form>
+            
+            <form id="search_form">
+                <input id="search_input" class="bp3-input .modifier" :modifier type="text" placeholder="Search a node" dir="auto" />
+            </form>
     
-            <input class="bp3-input .modifier" :modifier type="text" placeholder="Search a node" dir="auto" />
-    
-            <input class="bp3-input .modifier" :modifier type="text" placeholder="Delete a node" dir="auto" />
-    
+            <form id="delete_form">
+                <input id="delete_input" class="bp3-input .modifier" :modifier type="text" placeholder="Delete a node" dir="auto" />
+            </form>
     
         </div>
     </div>
+    <script> // it checks whether the enter key is pressed or not.
+        document.getElementById('add_input').addEventListener('keypress', function (event) {
+            if (event.keyCode == 13) {
+                console.log(document.getElementById("add_input").value);
+                alert(document.getElementById("add_input").value)
+                document.getElementById("add_form").reset();
+                event.preventDefault();
+            }
+        });
 
-<!--
-    <div class="container">
-
-        <div class="nav-wrapper">
-            <div class="left-nav-bar">
-                <div class="nav-link-wrapper">
-                    <a href="bplustree.html"> Binary Search Tree</a>
-                </div>
-
-                <div class="nav-link-wrapper">
-                    <a href="bplustree.html"> B+ Tree</a>
-                </div>
-            </div>
-        </div>
-    </div>
--->
-
-
-
-    <div id="canvas"> </div>
-
-    <div class="code">
-            <script src='bundle.js'></script>
-    </div>
-
+        document.getElementById('search_input').addEventListener('keypress', function (event) {
+                if (event.keyCode == 13) {
+                    console.log(document.getElementById("search_input").value);
+                    document.getElementById("search_form").reset();
+                    event.preventDefault();
+                }
+            });
+        document.getElementById('delete_input').addEventListener('keypress', function (event) {
+                if (event.keyCode == 13) {
+                    console.log(document.getElementById("delete_input").value);
+                    document.getElementById("delete_form").reset();
+                    event.preventDefault();
+                }
+            });
+        
+    </script>
 
 </body>
 
