@@ -74,6 +74,36 @@ then use the template html file and import this js file there.
 
 /* Binary Search Tree */
 
+function calc_line_coor(x1,y1,x2,y2,radius) {
+    const hypotenuse = Math.sqrt( (y2-y1)**2 + (x2-x1)**2 );
+    const bottom = (x2-x1);
+    const side = (y2-y1);
+    
+    const cosinus = bottom / hypotenuse;
+    const sinus = side / hypotenuse;
+
+    var result = []
+
+    result.push(x1 + radius*cosinus);
+    result.push(y1 + radius*sinus);
+
+    result.push(x2 - radius*cosinus);
+    result.push(y2 - radius*sinus);
+
+    return result;
+    
+}
+
+function draw_line(x1, y1, x2, y2, r) {
+    let line = new PIXI.Graphics();
+    line.lineStyle(2, 'black');
+    line.beginFill();
+    var points = calc_line_coor(x1,y1,x2,y2,r);
+    line.position.set(points[0],points[1]);
+    line.lineTo(points[2],points[3]);
+    viewport.addChild(line);
+}
+
 
 var first = draw_circle([window.innerWidth / 2, 300], 0xff0000, text = "1");
 function draw_circle(position, color = 0xff0000, text) {
@@ -101,11 +131,3 @@ function add_a_child() {
     if (data === "10") curr_node.destroy();
 }
 
-function draw_line(x1, y1, x2, y2) {
-    let line = new PIXI.Graphics();
-    line.lineStyle(2, 'black');
-    line.beginFill();
-    line.position.set(x1, y1 + 30);
-    line.lineTo(x2 - x1, y2 - y1 - 60);
-    viewport.addChild(line);
-}
