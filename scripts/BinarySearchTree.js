@@ -7,11 +7,11 @@ class BinarySearchTree { // probably
         this.#root = null; // BinarySearchTreeNode
     }
 
-    function getRoot() {
+    getRoot() {
         return this.#root;
     }
 
-    function searchNode(data) {
+    searchNode(data) {
         var curr = this.#root;
         while(curr !== null || curr.data !== data ) {
             if( curr.getData() > data)
@@ -25,7 +25,7 @@ class BinarySearchTree { // probably
         return false;
     }
 
-    function addNode(data) {
+    addNode(data) {
         var curr = this.#root;
 
         while(curr !== null)
