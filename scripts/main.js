@@ -78,6 +78,7 @@ class BinarySearchTreeNode {
         this.edge = null;
         this.viewport = _viewport;
         this.pos = _pos;
+        this.circle = null;
     }
 
     draw_node(pos, color = COLOR_CONSTANTS.node, mytext = this.val) {
@@ -94,6 +95,7 @@ class BinarySearchTreeNode {
         let txt = new PIXI.Text(mytext.toString(), style);
         txt.anchor.set(0.5);
         circle.addChild(txt);
+        this.circle = circle;
         return circle;
 
     }
@@ -201,7 +203,8 @@ document.getElementById('add_input').addEventListener('keypress', function (even
 });
 document.getElementById('search_input').addEventListener('keypress', function (event) {
     if (event.keyCode === 13) {
-        console.log(document.getElementById("search_input").value);
+        tree.root.draw_node([tree.root_pos[0]+100,tree.root_pos[1]]);
+        tree.root.
         document.getElementById("search_form").reset();
         event.preventDefault();
     }

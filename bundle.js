@@ -40875,10 +40875,9 @@ document.getElementById('add_input').addEventListener('keypress', function (even
         event.preventDefault();
     }
 });
-
 document.getElementById('search_input').addEventListener('keypress', function (event) {
     if (event.keyCode === 13) {
-        console.log(document.getElementById("search_input").value);
+        tree.root.draw_node([tree.root_pos[0]+100,tree.root_pos[1]]);
         document.getElementById("search_form").reset();
         event.preventDefault();
     }
