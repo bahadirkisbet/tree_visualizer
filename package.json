@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "animejs": "^3.2.1",
+    "gsap": "^3.6.0",
     "pixi-viewport": "^4.20.1",
     "pixi.js": "^5.3.8"
   },

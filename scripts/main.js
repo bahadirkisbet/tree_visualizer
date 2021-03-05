@@ -1,7 +1,9 @@
 //const BST = require("../scripts/BinarySearchTree");
 const PIXI = require('pixi.js'); // the graphic engine
 const Viewport = require('pixi-viewport').Viewport; // the dynamic background
-//const anime = require('animejs');
+const gsap = require("gsap");
+
+// give the plugin a reference to the PIXI object
 
 const app = new PIXI.Application({
     height : window.innerHeight - 53,
@@ -64,50 +66,52 @@ COLOR_CONSTANTS = {
     edge: 'black'
 };
 SIZE_CONSTANTS = {
-    radius: 30
+    radius: 20
 };
 
 
 class BinarySearchTreeNode {
-    constructor(_parent, _val, _viewport, _pos = null, _left = null, _right = null) {
-        this.parent = _parent;
-        this.left = _left;
-        this.right = _right;  // its type is a line or an arrow
-        this.val = _val;
-        this.circle = null;
-        this.edge = null;
-        this.viewport = _viewport;
-        this.pos = _pos;
-        this.circle = null;
+    constructor(myparent, myval, myviewport, mypos, myleft = null, myright = null) {
+        this.out = {
+            parent: myparent,
+            leftChild: myleft,
+            leftEdge: null,
+            rightChild: myright,
+            rightEdge: null, 
+        };
+        this.in = {
+            val: myval,
+            viewport: myviewport,
+            circle: null,
+            pos: mypos
+        };
+        this.in.circle = this.draw_node(mypos);
     }
 
-    draw_node(pos, color = COLOR_CONSTANTS.node, mytext = this.val) {
+    draw_node(pos, color = COLOR_CONSTANTS.node, mytext = this.in.val) {
         let circle = new PIXI.Graphics();
-        this.circle = circle;
         circle.lineStyle(2, color);
         circle.beginFill(color);
         circle.position.set(...pos);
         circle.drawCircle(0, 0, SIZE_CONSTANTS.radius);
         circle.endFill();
-        this.viewport.addChild(circle);
+        this.in.viewport.addChild(circle);
         let style = new PIXI.TextStyle({ fill: [COLOR_CONSTANTS.text] });
-        console.log(mytext.toString());
         let txt = new PIXI.Text(mytext.toString(), style);
         txt.anchor.set(0.5);
         circle.addChild(txt);
-        this.circle = circle;
         return circle;
 
     }
 
     draw_edge(toPos) {
         let line = new PIXI.Graphics();
-        this.edge = line;
+        this.out.leftChild = line;
         line.lineStyle(2, COLOR_CONSTANTS.edge).beginFill();
         var points = this.calc_line_coor(this.pos[0], this.pos[1], toPos[0], toPos[1], SIZE_CONSTANTS.radius);
         line.position.set(points[0], points[1]);
         line.lineTo(points[2] - points[0], points[3] - points[1]);
-        this.viewport.addChild(line);
+        this.in.viewport.addChild(line);
     }
 
     calc_line_coor(x1, y1, x2, y2, radius) {
@@ -130,26 +134,13 @@ class BinarySearchTreeNode {
         return result;
 
     }
-
-    get_pos() {
-        return this.pos;
-    }
-
-    set_pos(pos) {
-        this.circle.position.set(pos);
-    }
-
-    set_edge_post(pos) {
-        this.edge.lineTo(pos[0] - this.edge.x, pos[1] - this.edge.y);
-    }
-
 }
 
 class BinarySearchTree {
-    constructor(_viewport) {
+    constructor(myviewport) {
         this.root = null;
         this.root_pos = [window.innerWidth/2,100];
-        this.viewport = _viewport
+        this.viewport = myviewport
     }
 
     add_node(_val) {
@@ -203,9 +194,8 @@ document.getElementById('add_input').addEventListener('keypress', function (even
 });
 document.getElementById('search_input').addEventListener('keypress', function (event) {
     if (event.keyCode === 13) {
-        tree.root.draw_node([tree.root_pos[0]+100,tree.root_pos[1]]);
-        tree.root.
         document.getElementById("search_form").reset();
+        gsap.TweenLite.to(tree.root.in.circle,{ x: 100, duration: 1 } );
         event.preventDefault();
     }
 });
